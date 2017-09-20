@@ -1,0 +1,30 @@
+{% extends "_layouts/cp" %}
+{% set centered = true %}
+
+{% set title = "FormBuilder2 Export"|t %}
+
+{% set content %}
+
+{% set forms = craft.exportsubmissions.getAllForms %}
+
+<form action="/admin/exportsubmissions/export" target="_blank" method="GET">
+  <input type="hidden" name="auth" value="FKFtREpuuuj9FAvTwsbnfchb" />
+  <select name="formId" class="export-form">
+    {% for form in forms %}
+      <option value="{{ form.id }}">{{ form.name }}</option>
+    {% endfor %}
+  </select>
+  <select name="format" class="export-format">
+    <option>JSON</option>
+    <option>CSV</option>
+  </select>
+  <select name="limit" class="export-limit">
+    <option value="">All</option>
+    <option value="{{ "now"|date("Y-m-d h:m:s") }}">Past day</option>
+    <option value="{{ "last week"|date("Y-m-d h:m:s") }}">Past week</option>
+    <option value="{{ "last month"|date("Y-m-d h:m:s") }}">Past month</option>
+    <option value="{{ "last year"|date("Y-m-d h:m:s") }}">Past Year</option>
+  </select>
+  <input type="submit" value="Export" />
+</form>
+{% endset %}
